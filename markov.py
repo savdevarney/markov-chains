@@ -48,12 +48,25 @@ def make_chains(text_string):
 
     #list of tuples to represent keys in dictionary
     key_list = []
-    for i in range(len(words) - 1):
-        key = (words[i], words[i + 1])
-        key_list.append(key)
+    for i in range(len(words)):
+        if i == (len(words) - 1):
+            key = (words[i], words[0])
+            key_list.append(key)
+        else:
+            key = (words[i], words[i + 1])
+            key_list.append(key)
+
+
     print key_list
 
+    for key in key_list:
+        chains[key] = []
 
+    for i in range(len(words) - 1):
+        index_key = (words[i - 2], words[i - 1])
+        chains[index_key].append(words[i])
+
+    print chains
     return chains
 
 
