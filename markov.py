@@ -56,17 +56,13 @@ def make_chains(text_string):
             key = (words[i], words[i + 1])
             key_list.append(key)
 
-
-    print key_list
-
     for key in key_list:
         chains[key] = []
 
-    for i in range(len(words) - 1):
+    for i in range(len(words)):
         index_key = (words[i - 2], words[i - 1])
         chains[index_key].append(words[i])
 
-    print chains
     return chains
 
 
@@ -75,8 +71,10 @@ def make_text(chains):
 
     words = []
 
-    # your code goes here
+    starting_point = choice(chains.keys())
+    words.extend([starting_point[0], starting_point[1]])
 
+    print words
     return " ".join(words)
 
 
