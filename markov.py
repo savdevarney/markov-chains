@@ -47,21 +47,36 @@ def make_chains(text_string):
     words = text_string.split()
 
     #list of tuples to represent keys in dictionary
-    key_list = []
+    # key_list = []
+    # for i in range(len(words)):
+    #     if i == (len(words) - 1):
+    #         key = (words[i], words[0])
+    #         key_list.append(key)
+    #     else:
+    #         key = (words[i], words[i + 1])
+    #         key_list.append(key)
+
+    # for key in key_list:
+    #     chains[key] = []
+
+    # for i in range(len(words)):
+    #     index_key = (words[i - 2], words[i - 1])
+    #     chains[index_key].append(words[i])
+
     for i in range(len(words)):
+        word = words[i]
         if i == (len(words) - 1):
             key = (words[i], words[0])
-            key_list.append(key)
+            chains[key] = []
+            chains[key].append(words[1])
+        elif i == (len(words) - 2):
+            key = (words[i], words[-1])
+            chains[key] = []
+            chains[key].append(words[-1])
         else:
-            key = (words[i], words[i + 1])
-            key_list.append(key)
-
-    for key in key_list:
-        chains[key] = []
-
-    for i in range(len(words)):
-        index_key = (words[i - 2], words[i - 1])
-        chains[index_key].append(words[i])
+            key = (words[i], words[i+1])
+            chains[key] = []
+            chains[key].append(words[i+3])
 
     return chains
 
@@ -73,6 +88,14 @@ def make_text(chains):
 
     starting_point = choice(chains.keys())
     words.extend([starting_point[0], starting_point[1]])
+
+    while True:
+        next_word = choice(chains[starting_point])
+        words.append(next_word)
+        starting_point = (starting_point[1], next_word)
+        stopping_point = starting_point[1][-1]
+        if len(words) > 50 and stopping_point == "?":
+            break
 
     print words
     return " ".join(words)
